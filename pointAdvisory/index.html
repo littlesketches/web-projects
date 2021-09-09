@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />	
+	<title>Net Zero Pathways Tool</title>
+
+    <script src="js/tabletop.min.js"></script>	
+    <script src="js/d3.min.js"></script> 
+    <script src="js/lodash.min.js"></script> 
+
+    <!-- Load Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<!--Vis JS -->
+    <script src="js/point.js"></script>
+
+
+    <!-- Stylesheets-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+ 	<link rel="stylesheet" href="	https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css">
+ 	<link rel="stylesheet" href="css/point.css">
+	<link href="https://fonts.googleapis.com/css?family=Oswald|Roboto|Playfair+Display" rel="stylesheet">
+
+	<meta name="author" content="little sketches">
+</head>
+
+<body>
+	<div id = "headerRow" class = "row nav">
+		<h1 id = "main-header">net zero pathways tool</h1>
+		<p id = tagline> visualising your climate action trajectory from now to 2050 </p>
+	</div>	
+	<div class = "row">
+		<div id = "intro-paragraph" class ="col-4 offset-4">
+			<p>Welcome to the emissions pathway visualiser: a tool for you to imagine what your future carbon emissions might look like - with and without abatement actions - and to explore the 'abatement gap' to your emission targets.
+			</p>
+		</div>
+	</div>
+	<div id = "contentRow" class = "row">		
+		<div id = "control-pane" class = "col-sm-2">
+			<a href="http://www.pointadvisory.com" target="_blank"><img id = "logo" src ="img/pointLogo_WhtonBlk.png"/></a>
+			<div class = "abatement-controls-container">
+				<h2>projections</h2>
+				<p class = "dropdownLabel">Emission view</p>	
+				<div id="viewSelector-container" class="dropdown">
+					<button id="viewSelector" class="btn btn-sm btn-primary dropdown-toggle selectorHeader-main" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Detailed emissions<span class="caret"></span>
+					</button>
+					<div id = "viewMenu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					    <a class="dropdown-item viewMenu" href="#">Sector level emissions</a>
+					    <a class="dropdown-item viewMenu" href="#">Sub-sector emissions</a>
+					    <a class="dropdown-item viewMenu" href="#">Detailed emissions</a>				
+					</div>
+				</div>
+				<p class = "dropdownLabel">Emissions reference case</p>	
+				<div id="refSelector-container" class="dropdown">
+					<button id="refSelector" class="btn btn-sm btn-primary dropdown-toggle selectorHeader-main" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Business as Usual<span class="caret"></span>
+					</button>
+					<div id = "refMenu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					    <a class="dropdown-item refMenu" href="#">Pessimistic</a>
+					    <a class="dropdown-item refMenu" href="#">Business as Usual</a>
+					    <a class="dropdown-item refMenu" href="#">Optimistic</a>						
+					</div>
+				</div>
+			</div>
+
+			<div class = "abatement-controls-container">
+				<h2>modelled actions</h2>		
+				<div class = 'slider-group actions stationary-energy'>
+					<p class = "sliderGroupLabel">Stationary Energy</p>	
+					<div class="slidercontainer row">
+						<div class="col-sm-6 slideLabel-container">						
+							<p class ='sliderLabel align-middle'>Energy efficiency</p>	
+						</div>
+						<div class="col-sm-6 slider-container">
+						  	<input type="range" min="0" max="100" value="0" class="slider" id="sliderEE" onchange = "updateChart(masterData)">
+							<label for="" 	class = "labelSmall pull-left">Low</label>
+							<label for="" 	class = "labelSmall pull-right">High</label>
+						</div>
+					</div>
+					<div class="slidercontainer row">
+						<div class="col-sm-6 slideLabel-container">						
+							<p class ='sliderLabel'>Renewable energy</p>	
+						</div>
+						<div class="col-sm-6 slider-container">
+						  	<input type="range" min="0" max="100" value="0" class="slider" id="sliderRE" onchange = "updateChart(masterData)">
+							<label for="" 	class = "labelSmall pull-left">Low</label>
+							<label for="" 	class = "labelSmall pull-right">High</label>
+						</div>
+					</div>
+					<div class="slidercontainer row">
+						<div class="col-sm-6 slideLabel-container">						
+							<p class ='sliderLabel'>Electrify gas assets</p>	
+						</div>
+						<div class="col-sm-6 slider-container">
+						  	<input type="range" min="0" max="100" value="0" class="slider" id="sliderEG" onchange = "updateChart(masterData)">
+							<label for="" 	class = "labelSmall pull-left">Low</label>
+							<label for="" 	class = "labelSmall pull-right">High</label>
+						</div>
+					</div>
+
+					<div class = 'slider-group actions transport-energy'>
+						<p class = "sliderGroupLabel">Transport</p>	
+						<div class="slidercontainer row">
+							<div class="col-sm-6 slideLabel-container">						
+								<p class ='sliderLabel align-middle'>Electric vehicle uptake</p>	
+							</div>
+							<div class="col-sm-6 slider-container">
+							  	<input type="range" min="0" max="100" value="0" class="slider" id="sliderEV" onchange = "updateChart(masterData)">
+								<label for="" 	class = "labelSmall pull-left">Low</label>
+								<label for="" 	class = "labelSmall pull-right">High</label>
+							</div>
+						</div>
+						<div class="slidercontainer row">
+							<div class="col-sm-6 slideLabel-container">						
+								<p class ='sliderLabel'>Car share, active/passive uptake</p>	
+							</div>
+							<div class="col-sm-6 slider-container">
+							  	<input type="range" min="0" max="100" value="0" class="slider" id="sliderAPT" onchange = "updateChart(masterData)">
+								<label for="" 	class = "labelSmall pull-left">Low</label>
+								<label for="" 	class = "labelSmall pull-right">High</label>
+							</div>
+						</div>
+						<div class="slidercontainer row">
+							<div class="col-sm-6 slideLabel-container">						
+								<p class ='sliderLabel'>Electrify public transport</p>	
+							</div>
+							<div class="col-sm-6 slider-container">
+							  	<input type="range" min="0" max="100" value="0" class="slider" id="sliderEPT" onchange = "updateChart(masterData)">
+								<label for="" 	class = "labelSmall pull-left">Low</label>
+								<label for="" 	class = "labelSmall pull-right">High</label>
+							</div>
+						</div>
+					</div>
+
+					<div class = 'slider-group actions waste-energy'>
+						<p class = "sliderGroupLabel">Waste</p>	
+						<div class="slidercontainer row">
+							<div class="col-sm-6 slideLabel-container">						
+								<p class ='sliderLabel align-middle'>Waste sorting</p>	
+							</div>
+							<div class="col-sm-6 slider-container">
+							  	<input type="range" min="0" max="100" value="0" class="slider" id="sliderWS" onchange = "updateChart(masterData)">
+								<label for="" 	class = "labelSmall pull-left">Low</label>
+								<label for="" 	class = "labelSmall pull-right">High</label>
+							</div>
+						</div>
+						<div class="slidercontainer row">
+							<div class="col-sm-6 slideLabel-container">						
+								<p class ='sliderLabel'>Best available landfill gas capture</p>	
+							</div>
+							<div class="col-sm-6 slider-container">
+							  	<input type="range" min="0" max="100" value="0" class="slider" id="sliderLFG" onchange = "updateChart(masterData)">
+								<label for="" 	class = "labelSmall pull-left">Low</label>
+								<label for="" 	class = "labelSmall pull-right">High</label>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>	
+
+			<div class = "abatement-controls-container">
+				<h2>emissions targets</h2>	
+					<p>Reduction: <span id="targetPct">0%</span> by 2050</p>				
+					<div class = "slider-container gapSlider">
+						<label for="" 	class = "labelSmall above pull-left">0%</label>
+						<label for="" 	class = "labelSmall above pull-right">100%</label>						
+					  	<input type="range" min="0" max="100" value="0" class="slider" id="gapSlider" onchange = "updateChart(masterData)"></input>
+						<label for="" 	class = "labelSmall pull-left">No target</label>
+						<label for="" 	class = "labelSmall pull-right">Net Zero</label>
+					</div>				
+			</div>
+		</div>
+		<div class = "col-sm-10 svg-container">
+			<svg id= "vis">
+				<defs></defs>
+			</svg>
+		</div>
+	</div>
+
+	<div id = "bottomNav" class = "row">
+		<div class = "info-box">
+			<div class = "cc-container">		
+				<div id = "cc-info-container">		
+					<p class = "info"><i class="fa fa-info"></i></p>							
+				</div>
+				<div id = "cc-contact-container">
+					<p class = "">For more information contact <a href="mailto:info@pointadvisory.com">info@pointadvisory.com</a></p>
+				</div>	
+				<div id = "cc-image-container">
+					<div class = "cc-image-content">
+						<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img id = "ccImg" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/></a>
+					</div>
+				</div>
+				<div id = "cc-text-container">
+					<p class = "info-text"> This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>. 
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

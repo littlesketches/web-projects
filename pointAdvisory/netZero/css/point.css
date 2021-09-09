@@ -1,0 +1,418 @@
+  :root {
+    --back-color: #FFF;
+    --back-color: #2e2e2e;
+    --back-color: #000;
+    --fore-color: #2e2e2e;
+    --fore-color: #FFF;
+    --accent-color: #26ECFF;
+  }
+
+	body{
+		background: var(--back-color);
+		color: 		var(--fore-color) ;
+		font-family: "Roboto", sans-serif;		
+		overflow: scroll;
+	}
+	a {
+		color: var(--fore-color);
+	}
+	a:hover{
+		color: var(--accent-color);
+	}
+
+	h2 {
+		font-size: 1.25rem;
+		font-family: "Playfair Display";
+		padding-bottom: 0.25rem;
+		border-bottom: solid 2px;
+	}
+
+	#headerRow{
+		height: 20vh;
+	}
+		#main-header{
+			font-family: "Playfair Display";		
+			font-size: 3rem;
+			line-height: 0.8;
+			padding-top: 2rem;
+			text-align: center;
+			width: 100%;
+		}
+		#tagline{
+			margin-top: -1rem;
+			text-align: center;
+			display: block;
+			width: 100%;
+		}
+
+	#intro-paragraph{
+		color: var(--fore-color) ;
+		font-size: 0.8rem;
+		text-align: center;
+		position: fixed;
+		bottom: 16%;
+		width: 50%;
+
+	}
+
+	#contentRow{
+		height: 80vh;
+	}
+		#vis{
+			height: 100%;
+			width: 100%;
+			/*background-color: yellow;*/
+		}
+		#control-pane{
+			/*background-color: var(--fore-color);*/
+			height: 85vh;
+			margin-top: -15vh;
+			/*border-right: solid 0.4px #ddd;*/
+		}
+		#control-pane > *{
+			color: var(--fore-color) ;	
+			margin-right: 1rem;	
+			margin-left: 1.5rem;
+			font-size: 0.8rem;	
+		}
+		.dropdownLabel{
+			font-size: 0.5rem;
+			margin-bottom: 0;
+			margin-top: 1rem;
+		}
+		.slider-group{
+			margin-top: 0.5rem;
+			margin-bottom: 0rem;
+		}
+		.slideLabel-container{
+			margin: 0;
+			padding: 0;
+			display: inline-block;
+		}
+		.sliderLabel{
+			margin: 0;
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 0.5rem;	
+			line-height: 0.5rem;
+			height: 100%;		
+		}
+		.slider-container{
+			margin: 0;
+			margin-top: -0.5rem;		
+			padding-left: 0.5rem;		
+			padding-right: 0.5rem ;		
+		}		
+		.sliderGroupLabel{
+			margin-bottom: 0.25rem;	
+		}
+		#logo{
+			width: 50%;
+		}
+
+
+	.chartLabel{
+		font-size: 10px;
+		fill: var(--fore-color) ;
+		text-anchor: 'start';
+	}
+	path.area{
+		opacity: 1;
+		cursor: pointer;
+	}
+	path.area.abatement{
+		stroke-width: 0.5px;
+		stroke: var(--back-color);
+	}
+	path.area:hover{
+		opacity: 1;
+	}
+	path.totalPath{
+		stroke:  var(--fore-color) ;
+		stroke-width: 3px;
+		fill: none;
+	}
+	path.refPath{
+		stroke:  var(--accent-color) ;
+		stroke-width: 2px;
+		stroke-dasharray: 2px 2px;
+		fill: none;
+	}
+	.totalPath.yearTotal{
+		fill: var(--back-color);
+		stroke-width: 2px;
+		stroke:	var(--fore-color);
+		r: 4px;
+	}
+	.refPath.yearTotal{
+		fill: var(--back-color);
+		stroke-width: 2px;
+		stroke:  var(--accent-color) ;
+		r: 4px;
+	}
+
+	.yearTotal.totalPath.year2050{
+		r: 6px;
+	}
+
+	.currentEmissions{
+		fill: none;
+		stroke: var(--accent-color);
+		stroke-width: 10;
+	}
+	.currentEmissionsLabel{
+		fill:  var(--fore-color);
+		font-size: 1rem;
+	}
+
+	g.axis>path, g.tick>line{
+		stroke:  var(--fore-color);
+	}
+	g.tick>text{
+		fill:  var(--fore-color);
+	}
+	.axisLabel{
+		fill:  var(--fore-color);
+		font-size: 0.9rem;			
+	}
+	.labelUnits{
+		fill:  var(--fore-color);
+		font-size: 0.5rem;		
+	}
+
+	.lineLabel{
+		fill:  var(--fore-color);		
+		font-size: 0.75rem;				
+	}
+	.lineLabel.refPath{
+		fill:var(--accent-color); 
+	}
+	.lineLabel.totalPath{
+		fill:var(--fore-color); 
+	}
+
+/* Tooltips */
+
+  div.tooltip { 
+      position: absolute;  
+      color: var(--back-color);  
+      width: 8rem;          
+      height: 4.25rem;         
+      padding: 0.25rem 0.5rem;       
+      font-size: 0.6rem;
+      background: var(--fore-color);  
+      background-opacity: 0.8;  
+      border: 0px;    
+      border-radius: 8px;     
+      pointer-events: none;     
+	  text-align: center;
+  }
+  .tipYear{
+    font-size: 1.0rem;
+    font-weight: bold
+  }
+
+  .tipText{
+    font-size: 0.5rem;
+    line-height: 0.7
+  }
+
+
+/* USER INTERFACE */
+
+.abatement-controls-container{
+	margin-top: 2rem;
+}
+
+.slidercontainer {
+	margin-left: 0.5rem;
+    width: 100%;  	/*Width of the outside container  */
+}
+
+.slider-container.gapSlider{
+	text-align: center;
+	margin-top: -0.5rem;
+	padding: 0rem;
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 3px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 10px; /* Set a specific slider handle width */
+    height: 10px; /* Slider handle height */
+    border-radius: 15px; /* Slider handle height */
+    background: var(--accent-color); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 10px; /* Set a specific slider handle width */
+    height: 10px; /* Slider handle height */
+    background: var(--accent-color);
+    cursor: pointer; /* Cursor on hover */
+}
+
+.labelSmall{
+	font-size: 0.5rem;
+	margin-top: -0.25rem;
+}
+.labelSmall.above{
+	font-size: 0.5rem;
+	margin-top: 0rem;
+	margin-bottom: -0.45rem;
+}
+
+.abatementTitle{
+	font-size: 0.6rem;
+}
+
+#bottomNav{
+	position: fixed;
+	bottom: 7%;
+	height: 0;
+}
+
+	.info-box{
+		width: 600px;
+	    position: fixed;
+	    right: 0;  
+	    display: none;
+	}
+	p.info{
+		font-size: 2rem;
+		line-height: 2rem;
+		margin: 0;
+		cursor: pointer;
+		
+	}
+		.cc-container{
+		    display: table;
+		}
+		.cc-container>div{
+		    display: table-cell;
+		    font-size: 0.75rem;
+			color: var(--fore-color);
+		}
+			#cc-info-container{
+				width: 5%;
+				padding-left: 1rem;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);				
+			}
+
+			#cc-contact-container{
+				width: 32.5%;
+				padding-top:0.5rem;
+				border-left: 1px #fff solid;
+				padding-left: 1rem;								
+			}
+
+			#cc-image-container{
+				padding-left: 1rem;
+				border-left: 1px #fff solid;
+				position: relative;
+				width: 20%;
+				text-align: right;
+			}
+				.cc-image-content{
+					position: absolute;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+				#ccImg{
+					width: 120%;
+					display: inline;
+				}
+
+			#cc-text-container{
+				width: 40%;
+				padding-left: 1rem;
+			}
+
+			.info-text{
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);	
+				line-height: 1rem;			
+			}
+
+
+/* DROPDOWN BUTTON */
+  .btn{
+      background-color: var(--fore-color) ; 
+      color: var(--back-color); 
+      border-color: var(--fore-color); 
+      border-radius: 0px;
+      border-width: 0px;
+      font-size: 0.75rem;
+  }
+
+  .dropdown {list-style: none; display: inline-block;}
+  .dropdown .nav-link {color:var(--back-color); text-decoration: none;}
+  .dropdown .dropdown-menu a{color: var(--fore-color); text-decoration: none;}
+  .dropdown .btn {background: var(--fore-color); color: var(--back-color);}
+  .dropdown .btn:hover {background: var(--accent-color); color:var(--back-color);}
+  .dropdown .btn:active {background: var(--accent-color); color: var(--back-color);}
+  .dropdown .btn:active {background: var(--accent-color); color: var(--back-color);}
+  .dropdown .btn:focus {background: var(--accent-color); color: var(--back-color);}
+  .dropdown-menu .dropdown-item {display: inline-block; width: 100%; padding: 1px 3px;}
+  .container .dropdown .dropdown-menu a:hover{
+    color: var(--back-color);
+    background-color: var(--back-color);
+    border-color: var(--back-color);
+  }
+
+a.dropdown-item.viewMenu, a.dropdown-item.refMenu{
+	    color: var(--back-color);
+	    font-size: 0.75rem
+}
+
+  a.dropdown-item:active, .show>.btn-primary.dropdown-toggle {
+    background: var(--accent-color);
+    color: var(--back-color);
+  }
+
+  ul, li{
+    margin-left: 0.3rem; 
+    padding-left: 0.3rem; 
+  }
+
+
+/* ANIMATION FUN */
+	@-webkit-keyframes littlebeat {
+			0% { -webkit-transform: scale(1); }
+			50% { -webkit-transform: scale(0.9); }
+			100% { -webkit-transform: scale(1); }
+			}
+
+		.beating, .beat:hover, .beat:active, .beat:focus	{
+			-webkit-animation-name: littlebeat;
+			-webkit-animation-duration: 1000ms;
+			-webkit-transform-origin:50% 50%;
+			-webkit-animation-iteration-count: infinite;
+			-webkit-animation-timing-function: ease;	}
+
+
+
+
+
